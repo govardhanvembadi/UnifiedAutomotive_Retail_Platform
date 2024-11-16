@@ -25,11 +25,9 @@ def create_app(config_class = Config):
     mail.init_app(app)
 
     from flaskapp.users.routes import users
-    from flaskapp.posts.routes import posts
     from flaskapp.main.routes import main
 
     app.register_blueprint(users)
-    app.register_blueprint(posts)
     app.register_blueprint(main)
 
     return app

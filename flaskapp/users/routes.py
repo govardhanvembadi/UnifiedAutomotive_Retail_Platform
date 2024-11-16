@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint, Response
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskapp import db, bcrypt
-from flaskapp.db_models import User, Post, Sales, Inventory, Service
+from flaskapp.db_models import User, Sales, Inventory, Service
 from flaskapp.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SaleForm, InventoryForm
 from flaskapp.users.utils import send_reset_email, save_picture
 import os
@@ -79,14 +79,6 @@ def account():
     except FileNotFoundError as e:
         flash("Error in loading profile picture", 'warning')
     return render_template('account.html', title = 'Account', image_file = image_file, form = update_form)
-
-
-@users.route('/user_posts/<username>')
-def user_posts(username):
-    page = request.args.get('page', 1, type = int)
-    user = User.query.filter_by(username = username).first_or_404()
-    posts = Post.query.filter_by(author = user).order_by(Post.date_posted.desc()).paginate(page = page, per_page = 2)   
-    return render_template('user_posts.html', posts = posts, user = user)
 
 
 
