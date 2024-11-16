@@ -1,0 +1,30 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Environment
+venv/
+*.env
+.env
+
+# Database
+instance/
+*.db
+
+# Static files
+flaskapp/static/profile_pics/
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.swp
+
+# Exclude config.py from being ignored
+flaskapp/config.py

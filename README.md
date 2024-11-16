@@ -1,42 +1,215 @@
-### flask_wtf : 
-- Most reliable extension for working with forms in flask.
-- flask_wtf is a Flask extension that makes it easy to create forms and validate them.
-- It integrates seamlessly with WTForms, a library for form handling in Python, allowing you to define form fields, validation rules, and custom widgets efficiently.
+### **README for Unified Automotive Retail Experience Application**
 
-### WTForms:
-- WTForms is a Python library for handling form validation and rendering in web applications.
-- It allows you to create forms as Python classes, with fields that represent different input types (e.g., text fields, password fields, checkboxes).
-- WTForms provides built-in validation for common form inputs (e.g., email validation, required fields, etc.).
+---
 
-### flask_sqlalchemy
-- Flask-SQLAlchemy provides an ORM to map Python classes to database tables, making it easy to interact with the database using Python objects instead of raw SQL.
-- Integrates seamlessly with Flask by providing an SQLAlchemy object that manages database connections, schema migrations, and querying with minimal setup.
-- It simplifies database session management, allowing you to perform operations like adding, updating, and querying records using a straightforward API.
+## **Unified Automotive Retail Experience**
 
-### flask_bcrypt
-- Flask-Bcrypt provides an easy way to hash and check passwords securely, using the bcrypt hashing algorithm to
-- Offering a simple API to handle password hashing and verification, and is designed to work well with Flask-SQLAlchemy for user management.
-- Flask-Bcrypt automatically generates a unique salt for each password, ensuring that even identical passwords are hashed differently, which adds an extra layer of security.
+This is a Flask-based web application designed to streamline dealership operations by integrating inventory management, sales tracking, and service scheduling. The platform enables admins, sales staff, service staff, and customers to manage and interact with dealership functionalities efficiently.
 
-### flask_login
-- Flask-Login provides tools for managing user sessions, allowing you to easily handle user authentication, track logged-in users, and manage user sessions across requests.
-- It integrates smoothly with Flask applications, offering a straightforward API to log users in and out, and manage session cookies, making it simple to implement user authentication.
-- It supports user loading from session data, enabling you to retrieve user information from the session with minimal code, which is essential for maintaining user state between requests.
+---
+
+## **Project Structure**
+
+```
+Unified Automotive Retail Experience
+│
+├── flaskapp/                # Main application folder
+│   ├── __init__.py          # Flask app factory
+│   ├── routes.py            # Core routes for the application
+│   ├── static/              # Static files (CSS, images)
+│   │   ├── profile_pics/    # Profile pictures upload folder
+│   │   └── main.css         # Main application styles
+│   ├── templates/           # HTML templates
+│   │   ├── about.html       # About page
+│   │   ├── account.html     # User account page
+│   │   ├── add_sale.html    # Add sales form
+│   │   ├── add_vehicle.html # Add new vehicle form
+│   │   ├── book_service.html # Book a service appointment
+│   │   ├── customer_service_data.html # Customer's service history
+│   │   ├── edit_vehicle.html # Edit vehicle details
+│   │   ├── home.html        # Home page
+│   │   ├── inventory.html   # Inventory management
+│   │   ├── layout.html      # Base layout template
+│   │   ├── login.html       # Login form
+│   │   ├── register.html    # User registration form
+│   │   ├── reset_request.html # Password reset request
+│   │   ├── reset_token.html # Password reset form
+│   │   ├── sales.html       # Sales tracking page
+│   │   ├── service_appointments.html # Service scheduling page
+│   │   └── customer_service_data.html # Customer’s service data
+│
+├── users/                   # User-related functionality
+│   ├── __init__.py          # User blueprint initialization
+│   ├── forms.py             # Forms for user registration, login, and profile updates
+│   ├── routes.py            # Routes for user-related operations
+│   ├── utils.py             # Utility functions for email handling, password resets, etc.
+│
+├── __init__.py              # Application-level initialization
+├── config.py                # Configuration settings (e.g., database URI, secret key)
+├── db_models.py             # Database models (Users, Inventory, Sales, Service)
+├── instance/
+│   ├── site.db              # SQLite database file
+├── app.py                   # Main entry point for the application
+├── requirements.txt         # Python dependencies for the project
+├── README.md                # Project documentation
+```
+
+---
+
+## **Features**
+
+### **Admin Features:**
+- Manage inventory (add, edit, delete vehicles).
+- View and track all sales records.
+- Schedule and monitor service appointments.
+
+### **Sales Staff Features:**
+- Track sales records.
+- View inventory details.
+
+### **Service Staff Features:**
+- Schedule and update service appointments.
+- View customer service history.
+
+### **Customer Features:**
+- View and book service appointments.
+- Manage account details.
+
+---
+
+## **Setup and Installation**
+
+### **Prerequisites**
+- Python 3.8 or higher installed on your system.
+- `pip` package manager.
+
+### **Clone the Repository**
+```bash
+git clone https://github.com/your-repo/unified-automotive.git
+cd unified-automotive
+```
+
+### **Add config file inside flaskapp directory**
+```bash
+import os
+
+class Config:
+    SECRET_KEY = #os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db' #os.environ.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME =  #os.environ.get('EMAIL_USER')
+    MAIL_PASSWORD =  #os.environ.get('EMAIL_PASS')  
+
+```
 
 
-### pyjwt
-- PyJWT is a Python library for encoding and decoding JSON Web Tokens (JWTs), which are commonly used in authentication and authorization.
+### **Create a Virtual Environment**
+```bash
+python -m venv venv
+source venv/bin/activate  # On macOS/Linux
+venv\Scripts\activate     # On Windows
+```
 
+### **Install Dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-### flask_mail
-- Flask-Mail is a Flask extension that provides a simple interface for sending emails in Flask applications.
+---
 
+## **Run the Application**
 
-### flask_cors
+1. **Set Environment Variables** (For development mode):
+   - On macOS/Linux:
+     ```bash
+     export FLASK_APP=app.py
+     export FLASK_ENV=development
+     ```
+   - On Windows:
+     ```bash
+     set FLASK_APP=app.py
+     set FLASK_ENV=development
+     ```
 
+2. **Run the Server**:
+   ```bash
+   flask run
+   ```
 
-### USERS
-User('Govardhan', 'demo@bot.com', 'e5ad87622249ed75download (2).jpeg')
-User('Dathu', 'dathu@bot.com', 'default.jpg')
-User('BhanBot', 'Bhanu@bot.com', '90533feb2431c670images.jpeg')
-User('Varma', 'hurtedone13@gmail.com', 'b2c0e613a4d16a9adownload (1)_rotator1.jpeg')
+3. Open your browser and navigate to:
+   ```
+   http://127.0.0.1:5000
+   ```
+
+---
+
+## **Database Initialization**
+To set up the SQLite database:
+1. Open a Python shell:
+   ```bash
+   flask shell
+   ```
+2. Initialize the database:
+   ```python
+   from db_models import db
+   db.create_all()
+   exit()
+   ```
+
+---
+
+## **Folder Explanations**
+
+### **`flaskapp/static/`**
+- Contains static files like CSS, JavaScript, and images.
+- **Profile Pictures:** Uploaded profile pictures are saved in `profile_pics`.
+
+### **`flaskapp/templates/`**
+- Contains Jinja2 HTML templates for rendering views.
+- Base layout (`layout.html`) includes shared elements like headers and footers.
+
+### **`users/`**
+- Manages user authentication, registration, and profile updates.
+- Includes email handling for password resets.
+
+### **`db_models.py`**
+- Contains database models:
+  - `User`: Manages user details.
+  - `Inventory`: Tracks vehicle inventory.
+  - `Sales`: Records sales transactions.
+  - `Service`: Handles service appointments.
+
+---
+
+## **Configuration**
+### **`config.py`**
+- Contains application settings:
+  - **SECRET_KEY**: For securing forms and sessions.
+  - **SQLALCHEMY_DATABASE_URI**: Database connection string.
+
+---
+
+## **Features in Development**
+- Calendar view for service appointments.
+- Enhanced analytics dashboards.
+- Email/SMS notifications for reminders.
+
+---
+
+## **License**
+This project is licensed under the MIT License.
+
+---
+
+## **Contributors**
+- **Your Name** - Developer  
+- **Your Team Members** - Contributors
+
+For questions or support, contact **your-email@example.com**. 
+
+---
+
+With this documentation, new developers and users can quickly understand the application structure and functionality!
