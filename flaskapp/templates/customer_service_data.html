@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="font-weight-bold mb-4">Customer Service Dashboard</h2>
+
+    <!-- Service History Section -->
+    <div class="mb-5">
+        <h3 class="font-weight-bold">Service History</h3>
+        {% if service_history %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Service Type</th>
+                    <th>Date</th>
+                    <th>Vehicle</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in service_history %}
+                <tr>
+                    <td>{{ appointment.service_type }}</td>
+                    <td>{{ appointment.appointment_date.strftime('%B %d, %Y') }}</td>
+                    <td>{{ appointment.vehicle_id }}</td>
+                    <td>{{ appointment.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>You don't have any past service appointments yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Upcoming Appointments Section -->
+    <div class="mb-5">
+        <h3 class="font-weight-bold">Upcoming Appointments</h3>
+        {% if upcoming_appointments %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Service Type</th>
+                    <th>Date</th>
+                    <th>Vehicle</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in upcoming_appointments %}
+                <tr>
+                    <td>{{ appointment.service_type }}</td>
+                    <td>{{ appointment.appointment_date.strftime('%B %d, %Y') }}</td>
+                    <td>{{ appointment.vehicle_id }}</td>
+                    <td>{{ appointment.status }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('users.cancel_appointment', appointment_id=appointment.service_id) }}" onsubmit="return confirmCancel()">
+                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>You have no upcoming appointments.</p>
+        {% endif %}
+    </div>
+
+    <!-- Book a New Service Section -->
+    <div class="mb-5">
+        <h3 class="font-weight-bold">Book a New Service Appointment</h3>
+        <form method="POST" action="{{ url_for('users.book_service') }}">
+            <div class="form-group">
+                <label for="service_type">Service Type</label>
+                <select id="service_type" name="service_type" class="form-control" required>
+                    <option value="Oil Change">Oil Change</option>
+                    <option value="Tire Rotation">Tire Rotation</option>
+                    <option value="Brake Inspection">Brake Inspection</option>
+                    <option value="Engine Diagnostics">Engine Diagnostics</option>
+                    <!-- Add more services here -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vehicle">vehicle_id</label>
+                <input type="number" id="vehicle_id" name="vehicle_id" class="form-control" required placeholder="Enter your vehicle ID">
+            </div>
+            <div class="form-group">
+                <label for="date">Preferred Date</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success">Book Appointment</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function confirmCancel() {
+        return confirm("Are you sure you want to cancel this appointment?");
+    }
+</script>
+
+{% endblock %}

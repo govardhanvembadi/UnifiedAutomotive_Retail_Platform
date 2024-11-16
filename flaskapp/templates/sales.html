@@ -1,0 +1,201 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Sales Page</h1>
+
+    <!-- Overview Section -->
+    <div class="overview-section mb-4">
+        <h4>Overview</h4>
+        <div class="row">
+            <!-- Total Sales -->
+            <div class="col-md-3">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Sales</h5>
+                        <p class="card-text">{{ total_sales }}</p>  <!-- Replace with dynamic value -->
+                    </div>
+                </div>
+            </div>
+            <!-- Total Revenue -->
+            <div class="col-md-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Revenue</h5>
+                        <p class="card-text">{{ total_revenue }}</p> <!-- Replace with dynamic value -->
+                    </div>
+                </div>
+            </div>
+            <!-- Top-selling Vehicle -->
+            <div class="col-md-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title">Top-selling Vehicle</h5>
+                        <p class="card-text">{{ top_selling_vehicle }}</p>  <!-- Replace with dynamic value -->
+                    </div>
+                </div>
+            </div>
+            <!-- Number of Transactions -->
+            <div class="col-md-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h5 class="card-title">Transactions</h5>
+                        <p class="card-text">{{ num_transactions }}</p>  <!-- Replace with dynamic value -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sales Table Section -->
+    <div class="sales-table-section mb-4">
+        <h2>Sales Records</h2>
+        <div class="row">
+            <!-- Search and Filter Options -->
+            <div class="col-md-12">
+                <form method="GET" action="{{ url_for('users.sales') }}">
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="search" placeholder="Search by vehicle/model/customer">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="start_date">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="end_date">
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sales Table -->
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Vehicle</th>
+                    <th>Customer</th>
+                    <th>Quantity</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate through sales data -->
+                {% for sale in sales %}
+                    <tr>
+                        <td>{{ sale.sale_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <!-- Vehicle Model and Make -->
+                        <td>
+                            {% if sale.vehicle_id in vehicles %}
+                                {{ vehicles[sale.vehicle_id].make }} - {{ vehicles[sale.vehicle_id].model }}
+                            {% endif %}
+                        </td>
+
+                        <!-- Customer Name -->
+                        <td>{{ customers[sale.customer_id].username }}</td>
+                        <td>{{ sale.quantity }}</td>
+                        <td>${{ sale.total_amount }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+<!-- Visual Analytics Section (Charts/Graphs) -->
+<div class="analytics-section mb-4">
+    <h2>Sales Analytics</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="salesTrendChart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Sales data passed from Flask view
+    var salesData = {
+        labels: {{ sales_data.labels|tojson }},
+        datasets: [{
+            label: 'Sales',
+            data: {{ sales_data.sales|tojson }},
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+            tension: 0.4
+        }]
+    };
+
+    // Sales Trend Chart Configuration
+    var salesTrendChartConfig = {
+        type: 'line',  // Line chart
+        data: salesData,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Sales'
+                    }
+                }
+            }
+        }
+    };
+
+
+    // Create the Sales Trend Chart
+    var salesTrendChart = new Chart(document.getElementById('salesTrendChart'), salesTrendChartConfig);
+
+    // Additional Sales Chart (if needed)
+    var salesChartConfig = {
+        type: 'line',  // Line chart
+        data: salesData,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Month'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Sales'
+                    }
+                }
+            }
+        }
+    };
+
+    var salesChart = new Chart(document.getElementById('salesChart'), salesChartConfig);
+</script>
+
+
+
+<!-- Actions Section -->
+<div class="actions-section mb-4">
+    <h2>Actions</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{{ url_for('users.export_sales') }}" class="btn btn-success">Export Sales Data (CSV/Excel)</a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url_for('users.add_sale') }}" class="btn btn-primary">Add New Sale</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

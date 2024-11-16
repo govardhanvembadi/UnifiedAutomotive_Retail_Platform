@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- service_appointments.html -->
+    <form method="get" action="{{ url_for('users.service_appointments') }}">
+        <label for="status" class = "font-weight-bold py-3">Filter by Status:</label>
+        <select name="status" class = "mx-3">
+            <option value="">All</option>
+            <option value="Scheduled" {% if request.args.get('status') == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+            <option value="In Progress" {% if request.args.get('status') == 'In /Progress' %}selected{% endif %}>In Progress</option>
+            <option value="Completed" {% if request.args.get('status') == 'Completed' %}selected{% endif %}>Completed</option>
+        </select>
+        
+        <label for="date" class = "font-weight-bold py-3">Filter by Date:</label>
+        <input type="date" name="date" value="{{ request.args.get('date') }}" class = "mx-3">
+        
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    <table class="table table-bordered table-striped table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>Vehicle</th>
+                <th>Customer</th>
+                <th>Service Type</th>
+                <th>Appointment Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            {% for service in appointments %}
+            <tr class="">
+                <td>{{ inventory.get(service.vehicle_id).make }} - {{ inventory.get(service.vehicle_id).model }}</td>
+                <td>{{ users.get(service.customer_id).username }}</td>
+                <td>{{ service.service_type }}</td>
+                <td>{{ service.appointment_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ service.status }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('users.update_status', service_id=service.service_id) }}">
+                        <select name="status" class="btn-warning px-2 mx-2">
+                            <option value="Scheduled" {% if service.status == 'Scheduled' %}selected{% endif %} class="scheduled">Scheduled</option>
+                            <option value="In Progress" {% if service.status == 'In Progress' %}selected{% endif %} class="in-progress">In Progress</option>
+                            <option value="Completed" {% if service.status == 'Completed' %}selected{% endif %} class="completed">Completed</option>
+                        </select>
+                        <button type="submit" class="btn btn-success px-1 py-1 mx-3">Update Status</button>
+                    </form>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

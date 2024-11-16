@@ -1,0 +1,30 @@
+<!-- add_vehicle.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Add New Vehicle</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.make.label }} {{ form.make(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.model.label }} {{ form.model(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.year.label }} {{ form.year(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.stock_count.label }} {{ form.stock_count(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.price.label }} {{ form.price(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.status.label }} {{ form.status(class="form-control") }}
+    </div>
+    <button type="submit" class="btn btn-success">Add Vehicle</button>
+</form>
+
+{% endblock %}

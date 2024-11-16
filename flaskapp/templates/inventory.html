@@ -1,0 +1,70 @@
+<!-- inventory.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2 class="d-flex justify-content-between">
+    Inventory Overview
+    <a href="{{ url_for('users.add_vehicle') }}" class="btn btn-primary">Add New Vehicle</a>
+</h2>
+
+<!-- Search and Filter -->
+<form method="get" action="{{ url_for('users.inventory') }}">
+    <div class="form-group">
+        <input type="text" name="search" class="form-control" placeholder="Search by make, model, or year" value="{{ search }}">
+    </div>
+    <div class="form-group">
+        <select name="status" class="form-control">
+            <option value="All" {% if status_filter == 'All' %}selected{% endif %}>All</option>
+            <option value="Available" {% if status_filter == 'Available' %}selected{% endif %}>Available</option>
+            <option value="Sold" {% if status_filter == 'Sold' %}selected{% endif %}>Sold</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<!-- Inventory Table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Stock Count</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for vehicle in inventory_list.items %}
+        <tr>
+            <td>{{ vehicle.vehicle_id }}</td>
+            <td>{{ vehicle.make }}</td>
+            <td>{{ vehicle.model }}</td>
+            <td>{{ vehicle.year }}</td>
+            <td>{{ vehicle.stock_count }}</td>
+            <td>${{ vehicle.price }}</td>
+            <td>{{ vehicle.status }}</td>
+            <td>
+                <a href="{{ url_for('users.edit_vehicle', vehicle_id=vehicle.vehicle_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                <form method="POST" action="{{ url_for('users.delete_vehicle', vehicle_id=vehicle.vehicle_id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this vehicle?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<div class="pagination d-flex px-3 py-3">
+    {% if inventory_list.has_prev %}
+        <a href="{{ url_for('users.inventory', page=inventory_list.prev_num) }}" class="px-3">Previous</a>
+    {% endif %}
+    <span>Page {{ inventory_list.page }} of {{ inventory_list.pages }}</span>
+    {% if inventory_list.has_next %}
+        <a href="{{ url_for('users.inventory', page=inventory_list.next_num) }}" class = "px-3">Next</a>
+    {% endif %}
+</div>
+{% endblock %}

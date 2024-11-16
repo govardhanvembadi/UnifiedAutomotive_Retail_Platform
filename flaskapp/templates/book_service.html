@@ -1,0 +1,21 @@
+<!-- add_vehicle.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<form method="post">
+    <label for="vehicle_id">Vehicle:</label>
+    <select name="vehicle_id">
+        {% for vehicle in vehicles %}
+        <option value="{{ vehicle.vehicle_id }}">{{ vehicle.make }} - {{ vehicle.model }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="service_type">Service Type:</label>
+    <input type="text" name="service_type" required>
+
+    <label for="appointment_date">Appointment Date:</label>
+    <input type="datetime-local" name="appointment_date" required>
+
+    <button type="submit">Book Appointment</button>
+</form>
+{% endblock %}

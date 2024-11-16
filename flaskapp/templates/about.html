@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <style>
+        /* styles.css (extend this to include about page styling) */
+
+/* Page Header */
+.page-header {
+  background: linear-gradient(135deg, #004b87, #0074d9);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+}
+
+.page-header p {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* About Content */
+.about-content {
+  padding: 1rem;
+}
+
+.about-content h2 {
+  margin-bottom: 1rem;
+  color: #004b87;
+}
+
+.about-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Team Section */
+.team-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.card {
+  background: #f4f4f4;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  flex: 1;
+  text-align: left;
+}
+
+.card h3 {
+  margin-bottom: 0.5rem;
+  color: #0074d9;
+}
+
+.card p {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+    </style>
+    <!-- Main Content -->
+    <div class="main-content">
+      <header class="page-header">
+        <h1>About Us</h1>
+        <p>Learn more about our mission, vision, and the team behind Unified Automotive Retail Experience.</p>
+      </header>
+
+      <!-- Content Section -->
+      <section class="about-content">
+        <h2>Our Mission</h2>
+        <p>
+          To revolutionize automotive retail by providing a unified platform that integrates sales, service, inventory, and customer engagement, enabling dealerships to operate efficiently and deliver exceptional customer experiences.
+        </p>
+
+        <h2>Our Vision</h2>
+        <p>
+          To become the leading platform for automotive dealerships globally, empowering businesses with innovative tools and AI-driven insights to thrive in a competitive market.
+        </p>
+
+        <h2>Meet the Team</h2>
+        <div class="team-cards">
+          <div class="card">
+            <h3>Govardhan Vembadi</h3>
+            <p>Developer    </p>
+            <p>Govardhan developed this application prototype as part of the demonstraion of his idea.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 Unified Automotive Retail Experience. All Rights Reserved.</p>
+    </div>
+  </footer>
+  </div>
+
+{% endblock content %}

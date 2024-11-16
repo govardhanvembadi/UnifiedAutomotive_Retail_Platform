@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h1>Add New Sale</h1>
+
+  <div class="card">
+    <div class="card-body">
+      <form method="POST" action="{{ url_for('users.add_sale') }}">
+        {{ form.hidden_tag() }}
+
+        <!-- Vehicle Details -->
+        <h3>Vehicle Details</h3>
+        
+        <div class="form-group">
+          <label for="vehicle_id">Vehicle ID</label>
+          {{ form.vehicle_id(class="form-control", id="vehicle_id") }}
+        </div>
+
+        <!-- Make and Model (Auto-filled based on vehicle selection) -->
+        <div class="form-group">
+          <label for="make_model">Make and Model</label>
+          <input type="text" class="form-control" id="make_model" name="make_model" value="{{ form.vehicle_id.data and form.get_vehicle_details(form.vehicle_id.data)[0] + ' - ' + form.get_vehicle_details(form.vehicle_id.data)[1] }}" readonly>
+        </div>
+
+        <!-- Customer Details -->
+        <h3>Customer Details</h3>
+
+        <div class="form-group">
+          <label for="customer_id">Customer ID</label>
+          {{ form.customer_id(class="form-control", id="customer_id") }}
+        </div>
+
+        <!-- Customer Name (Auto-filled based on customer selection) -->
+        <div class="form-group">
+          <label for="customer_name">Customer Name</label>
+          <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{ form.customer_id.data and form.get_customer_name(form.customer_id.data) }}" readonly>
+        </div>
+
+        <!-- Sale Details -->
+        <h3>Sale Details</h3>
+
+        <div class="form-group">
+          <label for="sale_date">Sale Date</label>
+          {{ form.sale_date(class="form-control", id="sale_date") }}
+        </div>
+
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          {{ form.quantity(class="form-control", id="quantity") }}
+        </div>
+
+        <!-- Total Amount (Auto-calculated) -->
+        <div class="form-group">
+          <label for="total_amount">Total Amount</label>
+          <input type="text" class="form-control" id="total_amount" name="total_amount" value="{{ form.total_amount.data }}" readonly>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="form-group">
+          <label for="payment_method">Payment Method</label>
+          {{ form.payment_method(class="form-control", id="payment_method") }}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Add Sale</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
