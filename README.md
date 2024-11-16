@@ -106,13 +106,6 @@ class Config:
 ```
 
 
-### **Create a Virtual Environment**
-```bash
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate     # On Windows
-```
-
 ### **Install Dependencies**
 ```bash
 pip install -r requirements.txt
@@ -205,10 +198,8 @@ This project is licensed under the MIT License.
 ---
 
 ## **Contributors**
-- **Your Name** - Developer  
-- **Your Team Members** - Contributors
+- **Govardhan** - Developer  
 
-For questions or support, contact **your-email@example.com**. 
 
 ---
 
